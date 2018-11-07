@@ -194,10 +194,15 @@ public class HangmanGame {
             System.out.println("Congratulations you won! The word was: " + hangman.getCurrentWord());
             System.out.println("You took " + hangman.getGuessCount() + " guesses.");
 
-            if(hangman.getGuessCount() < loader.getAverageGuesses())
-                System.out.println("You scored better than average. The average is " + loader.getAverageGuesses() + " guesses.");
-            else
-                System.out.println("You scored lower than average. The average is " + loader.getAverageGuesses() + " guesses.");
+            if(loader.getAverageGuesses() > 0) {
+                if (hangman.getGuessCount() < loader.getAverageGuesses())
+                    System.out.println("You scored " + hangman.getGuessCount() + " which is lower than average, nice! The average is " + loader.getAverageGuesses() + " guesses.");
+                else if(hangman.getGuessCount() == loader.getAverageGuesses()){
+                    System.out.println("You scored " + hangman.getGuessCount() + " which is the average, nice! The average is " + loader.getAverageGuesses() + " guesses.");
+                }
+                else
+                    System.out.println("You scored " + hangman.getGuessCount() + " which is higher than average. The average is " + loader.getAverageGuesses() + " guesses.");
+            }
 
             System.out.print("Would you like save your score? yes/no: ");
             if(scan.nextLine().equals("yes")){
@@ -205,7 +210,9 @@ public class HangmanGame {
                 loader.addHighScore(scan.nextLine(), hangman.getGuessCount());
             }
         } else {
-            System.out.println("Unlucky. Try another game!");
+            System.out.println("Unlucky. Try another game! The word was: " + hangman.getCurrentWord());
+            System.out.print("Press enter to continue");
+            scan.nextLine();
         }
         return STATE.MENU;
     }
